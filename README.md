@@ -32,11 +32,8 @@ Para fazer o pedido, são necessárias três informações:
 
 
 ## Entrega
+Antes de iniciar o projeto, planejei o Flow da conversação desejado, de acordo com a especificação da atividade:
 
-- Aceitar o convite do repositório da sprint-3-dialogflow;
+![Pizzaria drawio](https://user-images.githubusercontent.com/81719133/146041453-7a6fc0ac-2d2b-45d0-8e4b-2c304a0c0b52.png)
 
-- Criar uma branch no repositório com o formato nome-sobrenome;
-
-- Subir o trabalho na branch com um readme.md, documentando detalhes sobre como a avaliação foi desenvolvida e como utilizar o sistema.
-
-- O prazo de entrega é até às 13h do dia 14/11 no repositório do github (https://github.com/Compass-pb-dialogflow-2021-ufms/sprint-3-dialogflow).
+## TO-DO
