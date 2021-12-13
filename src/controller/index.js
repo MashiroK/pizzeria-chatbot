@@ -6,10 +6,25 @@ let data = new orderModel();
 const entities = (req, res) => {
 
     let intent = req.body.queryResult.intent.displayName
+    //Intents
     switch (intent) {
+      
+      //INTENT
+      case "Default Welcome Intent":
+        res.json ( { "fulfillmentText": "Olá! Bem vindo à Pizzaria Tre Fratelli, como posso lhe ajudar?" } )
+        break
+
+      //INTENT
+      case "Default Fallback Intent":
+        res.json ( { "fulfillmentText": "Não consegui compreender, desculpe. Você pode explicar de outra forma?" } )
+        break
+
+      //INTENT
       case "See Menu Intent":
         showMenu()
         break
+
+      //INTENT
       case "Order Intent":
           order.pizza = []
           data = {}
@@ -18,47 +33,49 @@ const entities = (req, res) => {
             orderPizza()
             counter++;
           }
-          
         res.json({ "fulfillmentText": "Uma pizza de " + order.pizza[0].PizzaTipo + ", " + order.pizza[0].PizzaTamanho + ", certo?"})
         break
-        case "Order Intent - next":
+
+      //INTENT
+      case "Order Intent - next":
           res.json( { "fulfillmentText": "Deseja adicionar algo para beber com seu pedido?" } )
         break
-        case "Order Intent - next - yes":
+
+      //INTENT
+      case "Order Intent - next - yes":
           order.drink = []
           orderDrink()
           res.json( { "fulfillmentText": "Tudo ok! Seu pedido ficou "+ orderSummary() + ", total de R$" + orderTotal() + ". Deseja concluir seu pedido?"} )
         break
-        case "Order Intent - next - no":
+
+      //INTENT
+      case "Order Intent - next - no":
           res.json( { "fulfillmentText": "Tudo ok! Seu pedido ficou "+ orderSummary() + ", total de R$" + orderTotal()  + ". Deseja concluir seu pedido?"} )
         break
-        case "Order Intent - next - yes - yes":
+
+      //INTENT
+      case "Order Intent - next - yes - yes":
           res.json( { "fulfillmentText": "Pedido concluído!"} )
+        break
+
+      //INTENT
+      case "Order Intent - next - yes - no":
+          res.json( { "fulfillmentText": "Sem problemas, cancelamos seu pedido por enquanto, mas você pode pedir novamente quando quiser!!"} )
+        break
+
+      //INTENT
+      case "Order Intent - next - no - yes":
+          res.json( { "fulfillmentText": "Pedido concluído!"} )
+        break
+
+      //INTENT
+      case "Order Intent - next - no - no":
+          res.json( { "fulfillmentText": "Sem problemas, cancelamos seu pedido por enquanto, mas você pode pedir novamente quando quiser!"} )
         break
     }
 
-    function orderPizza() {
-        let param = req.body.queryResult.parameters
-        Object.keys(param).forEach(e => {
-          if(param[e] !== ""){
-            data[e] = `${param[e]}`
-          }  
-      }) 
-          order.pizza.push(data);
-          data = {}
-    }
 
-    function orderDrink() {
-      let param = req.body.queryResult.parameters
-      Object.keys(param).forEach(e => {
-        if(param[e] !== ""){
-          data[e] = `${param[e]}`
-        }  
-    }) 
-        order.drink.push(data)
-        data = {}
-  }
-
+    //Functions
     function showMenu() {
       res.json({"fulfillmentText": `Certo, aqui está o nosso cardápio:
             Tamanhos:
@@ -86,6 +103,28 @@ const entities = (req, res) => {
               Água de Coco:    $${menu.bebidas.aguaCoco}.
         `})
     }
+
+    function orderPizza() {
+      let param = req.body.queryResult.parameters
+      Object.keys(param).forEach(e => {
+        if(param[e] !== ""){
+          data[e] = `${param[e]}`
+        }  
+      }) 
+    order.pizza.push(data);
+    data = {}
+  }
+
+    function orderDrink() {
+      let param = req.body.queryResult.parameters
+      Object.keys(param).forEach(e => {
+        if(param[e] !== ""){
+          data[e] = `${param[e]}`
+        }  
+      }) 
+    order.drink.push(data)
+    data = {}
+  }
 
     function orderSummary() {
       let bebida = ""
